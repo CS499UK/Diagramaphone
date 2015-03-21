@@ -2,4 +2,8 @@
     <string name="app_name">Diagramaphone</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hello">Hello World, DatumDroidOCRActivity!</string>
+    <string name="button_text">OCR!</string>
+    <string name="text_hint">OCRed Text will appear here</string>
+
 </resources>
