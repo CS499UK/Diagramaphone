@@ -1,36 +1,34 @@
 package edu.uky.cs.www.diagramaphone;
 
 
-        import java.io.File;
-        import java.io.FileInputStream;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-        import java.io.InputStream;
-        import java.io.OutputStream;
-        import java.util.zip.GZIPInputStream;
-
         import android.app.Activity;
-        import android.content.Intent;
-        import android.content.res.AssetManager;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.graphics.Matrix;
-        import android.media.ExifInterface;
-        import android.net.Uri;
-        import android.os.Bundle;
-        import android.os.Environment;
-        import android.provider.MediaStore;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.EditText;
+import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
-        import com.googlecode.tesseract.android.TessBaseAPI;
+import com.googlecode.tesseract.android.TessBaseAPI;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class MainActivity extends Activity {
     public static final String PACKAGE_NAME = "com.datumdroid.android.ocr.simple";
     public static final String DATA_PATH = Environment
-            .getExternalStorageDirectory().toString() + "/SimpleAndroidOCR/";
+            .getExternalStorageDirectory().toString() + "/Diagramaphone/";
 
     // You should have the trained data file in assets folder
     // You can get them at:
@@ -73,20 +71,19 @@ public class MainActivity extends Activity {
             try {
 
                 AssetManager assetManager = getAssets();
+
+                //Verifies that the tessdata folder exists, and there exists a .traineddata file.
                 InputStream in = assetManager.open("tessdata/" + lang + ".traineddata");
-                //GZIPInputStream gin = new GZIPInputStream(in);
                 OutputStream out = new FileOutputStream(DATA_PATH
                         + "tessdata/" + lang + ".traineddata");
 
                 // Transfer bytes from in to out
                 byte[] buf = new byte[1024];
                 int len;
-                //while ((lenf = gin.read(buff)) > 0) {
                 while ((len = in.read(buf)) > 0) {
                     out.write(buf, 0, len);
                 }
                 in.close();
-                //gin.close();
                 out.close();
 
                 Log.v(TAG, "Copied " + lang + " traineddata");
@@ -214,6 +211,7 @@ public class MainActivity extends Activity {
         baseApi.init(DATA_PATH, lang);
         baseApi.setImage(bitmap);
 
+        //TODO: This is now the problem line.  Not sure what is going wrong.
         String recognizedText = baseApi.getUTF8Text();
 
         baseApi.end();
