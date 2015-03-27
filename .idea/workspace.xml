@@ -17,26 +17,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: edu.uky.cs.www.diagramaphone" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd064a6d-70bf-4bf1-a7ec-c9eb4d65f1be" name="Default" comment="Assets folder works.  Still crashes, now on line">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.bigrams" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.fold" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.lm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.nn" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.params" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.size" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.cube.word-freq" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.tesseract_cube.nn" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/tessdata/eng.traineddata" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.bigrams" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.fold" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.lm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.nn" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.params" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.size" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.cube.word-freq" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.tesseract_cube.nn" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/tessdata/eng.traineddata" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/edu/uky/cs/www/diagramaphone/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/edu/uky/cs/www/diagramaphone/MainActivity.java" />
+    <list default="true" id="cd064a6d-70bf-4bf1-a7ec-c9eb4d65f1be" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Diagramaphone.iws" />
@@ -68,8 +49,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/uky/cs/www/diagramaphone/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3140244" vertical-offset="2777" max-vertical-offset="3360">
-              <caret line="214" column="4" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.085365854" vertical-offset="2777" max-vertical-offset="3360">
+              <caret line="209" column="31" selection-start-line="209" selection-start-column="31" selection-end-line="209" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -2473,7 +2454,11 @@
       <created>1427247670437</created>
       <updated>1427247670437</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="assetsmanager is working.  Problem is on line 215 now.">
+      <created>1427467392926</created>
+      <updated>1427467392926</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -2546,7 +2531,8 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Added tessdata dir, incl. tessdata/eng.traineddata.  Still crashes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tessdata dir, incl. tessdata/eng.traineddata.  Still crashes." />
+    <MESSAGE value="assetsmanager is working.  Problem is on line 215 now." />
+    <option name="LAST_COMMIT_MESSAGE" value="assetsmanager is working.  Problem is on line 215 now." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2990,8 +2976,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/uky/cs/www/diagramaphone/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3140244" vertical-offset="2777" max-vertical-offset="3360">
-          <caret line="214" column="4" selection-start-line="214" selection-start-column="4" selection-end-line="214" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.085365854" vertical-offset="2777" max-vertical-offset="3360">
+          <caret line="209" column="31" selection-start-line="209" selection-start-column="31" selection-end-line="209" selection-end-column="31" />
           <folding />
         </state>
       </provider>
