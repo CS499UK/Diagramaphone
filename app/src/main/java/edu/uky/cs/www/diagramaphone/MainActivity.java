@@ -331,8 +331,9 @@ public class MainActivity extends ActionBarActivity {
         recognizedText = recognizedText.trim();
 
         if ( recognizedText.length() != 0 ) {
-            _field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
-            _field.setSelection(_field.getText().toString().length());
+            //_field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
+            //_field.setSelection(_field.getText().toString().length());
+            _field.setText(recognizedText);
             speakText();
         }
 
