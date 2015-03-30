@@ -243,8 +243,9 @@ public class MainActivity extends ActionBarActivity {
                     .show();
         }
 
-        scanForText(imgDecodableString);
         initTTS();
+        scanForText(imgDecodableString);
+        
     }
 
 
