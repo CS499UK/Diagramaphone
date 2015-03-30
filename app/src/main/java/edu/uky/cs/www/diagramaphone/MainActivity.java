@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -198,6 +199,9 @@ public class MainActivity extends ActionBarActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
     }
 
     public void loadImagefromGallery(View view) {
@@ -230,6 +234,7 @@ public class MainActivity extends ActionBarActivity {
                 imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
                 ImageView imgView = (ImageView) findViewById(R.id.imgView);
+                imgView.setOnTouchListener(imgSourceOnTouchListener);
                 // Set the Image in ImageView after decoding the String
                 imgView.setImageBitmap(BitmapFactory
                         .decodeFile(imgDecodableString));
@@ -243,12 +248,22 @@ public class MainActivity extends ActionBarActivity {
                     .show();
         }
 
-        initTTS();
         scanForText(imgDecodableString);
+        initTTS();
         Log.v(TAG, imgDecodableString);
-        speakText();
+        //speakText();
     }
 
+    View.OnTouchListener imgSourceOnTouchListener
+            = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+            Log.v(TAG, "test listener");
+            speakText();
+            return true;
+        }
+    };
 
     protected void scanForText(String imgDecodableString) {
         //_taken = true;
@@ -334,7 +349,7 @@ public class MainActivity extends ActionBarActivity {
         if ( recognizedText.length() != 0 ) {
             //_field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
             //_field.setSelection(_field.getText().toString().length());
-            _field.setText(recognizedText);
+            //_field.setText(recognizedText);
             //This next line throws an error:
             //speakText();
         }
