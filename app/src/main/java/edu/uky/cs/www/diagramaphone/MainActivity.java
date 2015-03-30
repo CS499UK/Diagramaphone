@@ -117,7 +117,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void speakText(){
-        String toSpeak = _field.toString();//colorRGB.getTextColors().toString(); //write.getText().toString();
+        String toSpeak = imgDecodableString;//colorRGB.getTextColors().toString(); //write.getText().toString();
 
         //Uncomment to show text of TTS
 
@@ -245,7 +245,8 @@ public class MainActivity extends ActionBarActivity {
 
         initTTS();
         scanForText(imgDecodableString);
-        
+        Log.v(TAG, imgDecodableString);
+        speakText();
     }
 
 
@@ -335,7 +336,7 @@ public class MainActivity extends ActionBarActivity {
             //_field.setSelection(_field.getText().toString().length());
             _field.setText(recognizedText);
             //This next line throws an error:
-            speakText();
+            //speakText();
         }
 
         // Cycle done.
