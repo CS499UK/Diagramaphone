@@ -11,6 +11,13 @@
         android:layout_weight="1" >
     </ImageView>
 
+    <EditText
+        android:id="@+id/ocrEditText"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+    </EditText>
+
     <Button
         android:id="@+id/buttonLoadPicture"
         android:layout_width="fill_parent"
