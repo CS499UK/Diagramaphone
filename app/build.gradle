@@ -12,9 +12,9 @@ android {
         versionName "1.0"
         ndk {
             moduleName "shape-detect"
-            cFlags "-DANDROID_NDK -D_DEBUG DNULL=0" // Define some macros
-            ldLibs "EGL", "GLESv3", "dl", "log"         // Link with these libraries!
-            stl "stlport_shared"                        // Use shared stlport library
+            //cFlags "-DANDROID_NDK -D_DEBUG DNULL=0" // Define some macros
+            //ldLibs "EGL", "GLESv3", "dl", "log"         // Link with these libraries!
+            //stl "stlport_shared"                        // Use shared stlport library
         }
 
     }
