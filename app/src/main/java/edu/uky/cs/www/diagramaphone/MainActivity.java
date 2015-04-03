@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import org.opencv.android.CameraBridgeViewBase;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,8 +33,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
 
-
 public class MainActivity extends ActionBarActivity {
+
+    //Something from openCV
+    private CameraBridgeViewBase mOpenCvCameraView;
 
     private static int RESULT_LOAD_IMG = 1;
     String imgDecodableString;
