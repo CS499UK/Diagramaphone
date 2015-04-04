@@ -39,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
     private CameraBridgeViewBase mOpenCvCameraView;
 
     private static int RESULT_LOAD_IMG = 1;
+    String recognizedText;
     String imgDecodableString;
 
     protected EditText _field;
@@ -122,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void speakText(){
-        String toSpeak = imgDecodableString;//colorRGB.getTextColors().toString(); //write.getText().toString();
+        String toSpeak = recognizedText;//colorRGB.getTextColors().toString(); //write.getText().toString();
 
         //Uncomment to show text of TTS
 
@@ -351,9 +352,9 @@ public class MainActivity extends ActionBarActivity {
         //Just added this:
         _field = (EditText) findViewById(R.id.ocrEditText);
         if ( recognizedText.length() != 0 ) {
-            //_field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
-            //_field.setSelection(_field.getText().toString().length());
-            //_field.setText(recognizedText);
+            _field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
+            _field.setSelection(_field.getText().toString().length());
+            _field.setText(recognizedText);
             //This next line throws an error:
             //speakText();
         }
