@@ -333,7 +333,7 @@ public class MainActivity extends ActionBarActivity {
         baseApi.setImage(bitmap);
 
         //TODO: This is now the problem line.  Not sure what is going wrong.
-        String recognizedText = baseApi.getUTF8Text();
+        recognizedText = baseApi.getUTF8Text();
 
         baseApi.end();
 
