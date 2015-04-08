@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -41,6 +42,8 @@ public class MainActivity extends ActionBarActivity {
     private static int RESULT_LOAD_IMG = 1;
     String recognizedText;
     String imgDecodableString;
+    TessBaseAPI baseApi;
+    Bitmap bitmap;
 
     protected EditText _field;
 
@@ -253,13 +256,13 @@ public class MainActivity extends ActionBarActivity {
                     .show();
         }
 
-        scanForText(imgDecodableString);
+        initTessBaseAPI(imgDecodableString);
         initTTS();
         Log.v(TAG, imgDecodableString);
         //speakText();
     }
 
-    View.OnTouchListener imgSourceOnTouchListener
+    /*View.OnTouchListener imgSourceOnTouchListener
             = new View.OnTouchListener() {
 
         @Override
@@ -268,12 +271,105 @@ public class MainActivity extends ActionBarActivity {
             speakText();
             return true;
         }
-    };
+    };*/
 
-    protected void scanForText(String imgDecodableString) {
+    protected  void initTessBaseAPI(String imgDecodableString) {
         //_taken = true;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 4;
+
+        bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+
+        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+
+        Log.v(TAG, "Before baseApi");
+
+        baseApi = new TessBaseAPI();
+        baseApi.setDebug(true);
+        baseApi.init(DATA_PATH, lang);
+        baseApi.setImage(bitmap);
+
+    }
+
+    View.OnTouchListener imgSourceOnTouchListener
+            = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View view, MotionEvent event) {
+
+
+            Log.i("Test audio", "test");
+            float eventX = event.getX();
+            float eventY = event.getY();
+            float[] eventXY = new float[]{eventX, eventY};
+
+            Matrix invertMatrix = new Matrix();
+            ((ImageView) view).getImageMatrix().invert(invertMatrix);
+
+            invertMatrix.mapPoints(eventXY);
+            int x = Integer.valueOf((int) eventXY[0]);
+            int y = Integer.valueOf((int) eventXY[1]);
+
+		/*	touchedXY.setText(
+					"touched position: "
+					+ String.valueOf(eventX) + " / "
+					+ String.valueOf(eventY));
+		    invertedXY.setText(
+					"touched position: "
+					+ String.valueOf(x) + " / "
+					+ String.valueOf(y));
+    */
+            //Drawable imgDrawable = ((ImageView) view).getDrawable();
+            //Bitmap bitmap = ((BitmapDrawable) imgDrawable).getBitmap();
+
+/*			imgSize.setText(
+					"drawable size: "
+					+ String.valueOf(bitmap.getWidth()) + " / "
+					+ String.valueOf(bitmap.getHeight()));
+*/
+            //Limit x, y range within bitmap
+            if (x < 0) {
+                x = 0;
+            } else if (x > bitmap.getWidth() - 1) {
+                x = bitmap.getWidth() - 1;
+            }
+
+            if (y < 0) {
+                y = 0;
+            } else if (y > bitmap.getHeight() - 1) {
+                y = bitmap.getHeight() - 1;
+            }
+
+            int touchedRGB = bitmap.getPixel(x, y);
+
+            //Continent Map
+
+            /*if(touchedRGB == Color.WHITE){
+                //colorName.setText("white");
+
+                blockText = "Ocean";
+               /* colorRGB.setText("touched color: WHITE");
+                colorRGB.setTextColor(Color.BLACK);
+                *//*
+            }*/
+
+            int left = x - 32;
+            int top = y - 32;
+            int width = 64;
+            int height = 64;
+
+            baseApi.setRectangle(left, top, width, height);
+            scanForText();
+            return true;
+        }
+    };
+
+    protected void scanForText() {
+        //_taken = true;
+
+        /*BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
         Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
@@ -321,7 +417,7 @@ public class MainActivity extends ActionBarActivity {
 
         } catch (IOException e) {
             Log.e(TAG, "Couldn't correct orientation: " + e.toString());
-        }*/
+        }
         bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
         // _image.setImageBitmap( bitmap );
 
@@ -331,11 +427,12 @@ public class MainActivity extends ActionBarActivity {
         baseApi.setDebug(true);
         baseApi.init(DATA_PATH, lang);
         baseApi.setImage(bitmap);
+        */
 
         //TODO: This is now the problem line.  Not sure what is going wrong.
-        String recognizedText = baseApi.getUTF8Text();
+        recognizedText = baseApi.getUTF8Text();
 
-        baseApi.end();
+        //baseApi.end();
 
         // You now have the text in recognizedText var, you can do anything with it.
         // We will display a stripped out trimmed alpha-numeric version of it (if lang is eng)

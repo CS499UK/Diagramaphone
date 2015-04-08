@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/Larry/Documents/Diagramaphone_1.1/Diagramaphone/libraries/tess-two/src/main/assets"/></dataSet><dataSet config="release"><source path="/Users/Larry/Documents/Diagramaphone_1.1/Diagramaphone/libraries/tess-two/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone\libraries\tess-two\src\main\assets"/></dataSet><dataSet config="release"><source path="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone\libraries\tess-two\src\release\assets"/></dataSet></merger>
