@@ -277,7 +277,7 @@ public class MainActivity extends ActionBarActivity {
         //_taken = true;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
+        options.inSampleSize = 1;
 
         bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
 
@@ -362,6 +362,9 @@ public class MainActivity extends ActionBarActivity {
 
             baseApi.setRectangle(left, top, width, height);
             scanForText();
+            //Log.v(TAG, "Text Read: " + recognizedText);
+            Log.v(TAG, "test listener");
+            speakText();
             return true;
         }
     };
@@ -428,7 +431,7 @@ public class MainActivity extends ActionBarActivity {
         baseApi.init(DATA_PATH, lang);
         baseApi.setImage(bitmap);
         */
-
+        recognizedText = "";
         //TODO: This is now the problem line.  Not sure what is going wrong.
         recognizedText = baseApi.getUTF8Text();
 
