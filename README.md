@@ -17,16 +17,21 @@ This repository contains the debug/run implementation of the project which inclu
 
 ## Included files
 
-*AndroidManifest.xml*                           See this file for the permissions and activities in the project.
+*AndroidManifest.xml*
+See this file for the permissions and activities in the project.
 
-*app/src/java/MainActivity.java*                This file contains the main source code for this project.
+*app/src/java/MainActivity.java*
+This file contains the main source code for this project.
 
-*app/build.gradle*                              Specifies the sdk versions that this project uses.  Current min is
+*app/build.gradle*
+Specifies the sdk versions that this project uses.  Current min is
 14, and target is 21.  Also specifies the tess-two dependency for app.
 
-*libraries/tess-two/build.gradle*               Specifies the sdk versions and location of jniLibs.
+*libraries/tess-two/build.gradle*
+Specifies the sdk versions and location of the necessary jniLibs.
 
-*settings.gradle*                               Rules for which parts of the project to build.
+*settings.gradle*
+Rules for which parts of the project to build.
 
 #Synopsis
 
