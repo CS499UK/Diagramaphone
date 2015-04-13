@@ -35,15 +35,18 @@ import java.util.Locale;
 
 public class MainActivity extends ActionBarActivity {
 
-    //Something from openCV
+    // Something from openCV to prove that it imported correctly
     private CameraBridgeViewBase mOpenCvCameraView;
 
+    // Result Strings for optical character recognition
     private static int RESULT_LOAD_IMG = 1;
     String recognizedText;
     String imgDecodableString;
 
+    // Should get initialized to the main activity's EditText
     protected EditText _field;
 
+    // Our package name and path
     public static final String PACKAGE_NAME = "com.datumdroid.android.ocr.simple";
     public static final String DATA_PATH = Environment
             .getExternalStorageDirectory().toString() + "/Diagramaphone/";
@@ -54,8 +57,10 @@ public class MainActivity extends ActionBarActivity {
     // http://code.google.com/p/tesseract-ocr/downloads/list
     public static final String lang = "eng";
 
+    // A TAG for log files
     private static final String TAG = "SimpleAndroidOCR.java";
 
+    // The text to speech object used by this application
     TextToSpeech ttobj;
 
 
@@ -72,11 +77,18 @@ public class MainActivity extends ActionBarActivity {
     public final static String MY_ORIGIN_STRING = "com.example.app";
 
 
+    /**
+     * onResume()
+     * Purpose:
+     *  This is a method that classes that extend ActionBarActivity (or any Activity)
+     *  must override.  Defines how the activity should resume if it has already been
+     *  created once.
+     */
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Use a new tread as this can take a while
+        // Use a new thread as this can take a while
         final Thread thread = new Thread(new Runnable() {
             public void run() {
                 genTone();
@@ -84,6 +96,12 @@ public class MainActivity extends ActionBarActivity {
         });
         thread.start();
     }
+
+    /**
+     * genTone()
+     * Purpose:
+     *   A simple helper function that will create a tone.
+     */
     void genTone(){
         // fill out the array
         for (int i = 0; i < numSamples/20; ++i) {
@@ -103,6 +121,11 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * playSound()
+     * Purpose:
+     *  Plays a short souund.
+     */
     void playSound(){
         final AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 sampleRate, AudioFormat.CHANNEL_OUT_MONO,
@@ -112,7 +135,17 @@ public class MainActivity extends ActionBarActivity {
         audioTrack.play();
     }
 
-
+    /**
+     * onPause()
+     * Purpose:
+     *  The text to speech object has a habit of crashing often.
+     *  This is one of the ActionBarActivity methods that this extends class overrides.
+     *  Defines how the activity should behave when paused.
+     * Preconditions:
+     *  The Text to Speech object may be initialized already or not.
+     * Post-conditions:
+     *  The text to speech object should stop correctly.
+     */
     @Override
     public void onPause(){
         if(ttobj !=null){
@@ -122,6 +155,15 @@ public class MainActivity extends ActionBarActivity {
         super.onPause();
     }
 
+    /**
+     * speakText()
+     * Purpose:
+     *  Helper function that simply gets the recognized text and speaks it out loud.
+     * Preconditions:
+     *   The recognizedText String should exist to get anything audible.
+     * Post-conditions:
+     *   An auditory reading of the recognized text from the OCR.
+     */
     public void speakText(){
         String toSpeak = recognizedText;//colorRGB.getTextColors().toString(); //write.getText().toString();
 
@@ -134,12 +176,28 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    /**
+     * colorCheck()
+     * Purpose:
+     *   Helper function that determines the equality of two colors.
+     * @param oldColor
+     * @param newColor
+     * @return
+     */
     public boolean colorCheck(String oldColor, String newColor){
         return !oldColor.equals(newColor);
     }
 
 
-
+    /**
+     * initTTS()
+     * Purpose:
+     *  Initializes a text to speech object.
+     * Preconditions:
+     *  An empty method variable called ttobj of type TextToSpeech.
+     * Post-conditions:
+     *  Initializes ttobj to the US English Text to Speech object.
+     */
     public void initTTS(){
         ttobj=new TextToSpeech(getApplicationContext(),
                 new TextToSpeech.OnInitListener() {
@@ -153,6 +211,19 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * onCreate
+     * Purpose:
+     *   Another override from the Activity class.
+     *   This method defines what this Activity should do the first time it is loaded.
+     * Preconditions:
+     *  @param savedInstanceState there are certain conditions when the application might need
+     *                            to remember the details of an Activity that was closed.
+     *                            Details at developer.android.com/training/basics/activity-lifecycle/recreating.html
+     * Post-conditions:
+     *   Copies the lang.traineddata over to the Android device for its local use the first
+     *   time that this activity is created.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -161,10 +232,12 @@ public class MainActivity extends ActionBarActivity {
         for (String path : paths) {
             File dir = new File(path);
             if (!dir.exists()) {
-                if (!dir.mkdirs()) {
+                if (!dir.mkdirs()) { //Handle if the directory cannot be created.
+                    //NOTE: Remove in final release version.
+                    //Helpful in debugging versions.
                     Log.v(TAG, "ERROR: Creation of directory " + path + " on sdcard failed");
                     return;
-                } else {
+                } else {    //If the directory doesn't exist and can be created.
                     Log.v(TAG, "Created directory " + path + " on sdcard");
                 }
             }
@@ -174,7 +247,6 @@ public class MainActivity extends ActionBarActivity {
         // lang.traineddata file with the app (in assets folder)
         // You can get them at:
         // http://code.google.com/p/tesseract-ocr/downloads/list
-        // This area needs work and optimization
         if (!(new File(DATA_PATH + "tessdata/" + lang + ".traineddata")).exists()) {
             try {
 
@@ -209,6 +281,15 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    /**
+     * loadImagefromGallery()
+     * Purpose:
+     *   Gets an image from the Android device's picture Gallery
+     * Preconditions:
+     *   @param view
+     * Post-conditions:
+     *   An image is loaded.
+     */
     public void loadImagefromGallery(View view) {
         // Create intent to Open Image applications like Gallery, Google Photos
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
@@ -217,6 +298,18 @@ public class MainActivity extends ActionBarActivity {
         startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
     }
 
+    /**
+     * onActivityResult()
+     * Purpose:
+     *  Loads in an image for analysis.
+     * Preconditions:
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     * Post-conditions:
+     *   The image is displayed in the image view.
+     *   Or, an error message when something went wrong.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -248,16 +341,18 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(this, "You haven't picked Image",
                         Toast.LENGTH_LONG).show();
             }
-        } catch (Exception e) {
+        } catch (Exception e) { //Handles when the activity can't get the image.
             Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
                     .show();
         }
 
         scanForText(imgDecodableString);
         initTTS();
+        // NOTE: remove before release.  Useful for debugging.
         Log.v(TAG, imgDecodableString);
         //speakText();
     }
+
 
     View.OnTouchListener imgSourceOnTouchListener
             = new View.OnTouchListener() {
@@ -270,13 +365,22 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
+    /**
+     * scanForText()
+     * Preconditions:
+     * @param imgDecodableString is an object form the OCR
+     * Post-conditions:
+     *  A String object containing the text in the analyzed region of the image.
+     */
     protected void scanForText(String imgDecodableString) {
-        //_taken = true;
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
 
         Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+
+        // Code for rotating an improperly aligned image.  Might be useful for later, not
+        // right now though since we aren't using the camera anymore.
         /*
         try {
             ExifInterface exif = new ExifInterface(_path);
@@ -323,30 +427,33 @@ public class MainActivity extends ActionBarActivity {
             Log.e(TAG, "Couldn't correct orientation: " + e.toString());
         }*/
         bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-        // _image.setImageBitmap( bitmap );
 
+        // NOTE: remove before release version.  Useful for debugging.
         Log.v(TAG, "Before baseApi");
 
+        // Create the tesseract API object here
         TessBaseAPI baseApi = new TessBaseAPI();
         baseApi.setDebug(true);
+        // Initialize with the traineddata
         baseApi.init(DATA_PATH, lang);
         baseApi.setImage(bitmap);
 
-        //TODO: This is now the problem line.  Not sure what is going wrong.
+        // Get the recognized text from the image.
         recognizedText = baseApi.getUTF8Text();
-
         baseApi.end();
 
         // You now have the text in recognizedText var, you can do anything with it.
         // We will display a stripped out trimmed alpha-numeric version of it (if lang is eng)
         // so that garbage doesn't make it to the display.
 
+        // NOTE: remove before release version.  Useful for debugging.
         Log.v(TAG, "OCRED TEXT: " + recognizedText);
 
         if ( lang.equalsIgnoreCase("eng") ) {
             recognizedText = recognizedText.replaceAll("[^a-zA-Z0-9]+", " ");
         }
 
+        //Finally, trim off text
         recognizedText = recognizedText.trim();
 
         //Just added this:

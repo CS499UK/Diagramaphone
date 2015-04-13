@@ -16,13 +16,6 @@
         <dex dex="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-9f1259084e53dea650e56f486c39e00f6d00336d.jar" />
     </item>
     <item
-        jar="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/exploded-aar/Diagramaphone/openCVLibrary2410/unspecified/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="8c24965d3ff46423d85190d69c1e88e13095a43e">
-        <dex dex="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-9f33447c92d78bbb95991d225a3afe3daaf07ddc.jar" />
-    </item>
-    <item
         jar="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -35,6 +28,13 @@
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
         <dex dex="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-e8da4a37a4404e4a00d07e5199eef1bd1230637d.jar" />
+    </item>
+    <item
+        jar="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/exploded-aar/Diagramaphone.libraries/opencv/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="d5720a9365ef5ff769a79922f1f7da8e62ade5c4">
+        <dex dex="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-83a73de6ab0226dda4806f603b3a11218415c634.jar" />
     </item>
     <item
         jar="/home/bryan/AndroidStudioProjects/Diagramaphone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
