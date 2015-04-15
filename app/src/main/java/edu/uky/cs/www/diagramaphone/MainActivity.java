@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.googlecode.leptonica.android.Pixa;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import org.opencv.android.CameraBridgeViewBase;
@@ -42,6 +44,16 @@ public class MainActivity extends ActionBarActivity {
     private static int RESULT_LOAD_IMG = 1;
     String recognizedText;
     String imgDecodableString;
+	
+	//TessbaseAPI object used for OCR 
+	TessBaseAPI baseApi;
+	
+	// Bitmap of image being processed
+    Bitmap bitmap;
+
+    Pixa words;
+
+    int left,top,width,height;
 
     // Should get initialized to the main activity's EditText
     protected EditText _field;
@@ -346,14 +358,16 @@ public class MainActivity extends ActionBarActivity {
                     .show();
         }
 
-        scanForText(imgDecodableString);
+        //scanForText(imgDecodableString);
+		initBitmap();
+		initTessBaseAPI();
         initTTS();
         // NOTE: remove before release.  Useful for debugging.
         Log.v(TAG, imgDecodableString);
         //speakText();
     }
 
-
+/*
     View.OnTouchListener imgSourceOnTouchListener
             = new View.OnTouchListener() {
 
@@ -364,22 +378,94 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
     };
+*/
 
-    /**
-     * scanForText()
-     * Preconditions:
-     * @param imgDecodableString is an object form the OCR
-     * Post-conditions:
-     *  A String object containing the text in the analyzed region of the image.
-     */
-    protected void scanForText(String imgDecodableString) {
+	View.OnTouchListener imgSourceOnTouchListener
+        = new View.OnTouchListener() {
+
+		@Override
+        public boolean onTouch(View view, MotionEvent event) {
+
+
+            Log.i("Test audio", "test");
+            float eventX = event.getX();
+            float eventY = event.getY();
+            float[] eventXY = new float[]{eventX, eventY};
+
+            Matrix invertMatrix = new Matrix();
+            ((ImageView) view).getImageMatrix().invert(invertMatrix);
+
+            invertMatrix.mapPoints(eventXY);
+            int x = Integer.valueOf((int) eventXY[0]);
+            int y = Integer.valueOf((int) eventXY[1]);
+
+		/*	touchedXY.setText(
+					"touched position: "
+					+ String.valueOf(eventX) + " / "
+					+ String.valueOf(eventY));
+		    invertedXY.setText(
+					"touched position: "
+					+ String.valueOf(x) + " / "
+					+ String.valueOf(y));
+		*/
+            //Drawable imgDrawable = ((ImageView) view).getDrawable();
+            //Bitmap bitmap = ((BitmapDrawable) imgDrawable).getBitmap();
+
+			/*			imgSize.setText(
+					"drawable size: "
+					+ String.valueOf(bitmap.getWidth()) + " / "
+					+ String.valueOf(bitmap.getHeight()));
+			*/
+            //Limit x, y range within bitmap
+            if (x < 0) {
+                x = 0;
+            } else if (x > bitmap.getWidth() - 1) {
+                x = bitmap.getWidth() - 1;
+            }
+
+            if (y < 0) {
+                y = 0;
+            } else if (y > bitmap.getHeight() - 1) {
+                y = bitmap.getHeight() - 1;
+            }
+
+            int touchedRGB = bitmap.getPixel(x, y);
+
+            //Continent Map
+
+            /*if(touchedRGB == Color.WHITE){
+                //colorName.setText("white");
+
+                blockText = "Ocean";
+               /* colorRGB.setText("touched color: WHITE");
+                colorRGB.setTextColor(Color.BLACK);
+                *//*
+            }*/
+
+            left = x - 32;
+            top = y - 32;
+            width = 64;
+            height = 64;
+
+            baseApi.setRectangle(left, top, width, height);
+            scanForText();
+            //Log.v(TAG, "Text Read: " + recognizedText);
+            Log.v(TAG, "test listener");
+            speakText();
+            return true;
+        }
+    };
+
+	protected  void initBitmap() {
+        
+		Log.v(TAG, "Intitializing Bitmap object");
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4;
+        options.inSampleSize = 1;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
+        bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
 
-        // Code for rotating an improperly aligned image.  Might be useful for later, not
+		// Code for rotating an improperly aligned image.  Might be useful for later, not
         // right now though since we aren't using the camera anymore.
         /*
         try {
@@ -426,21 +512,62 @@ public class MainActivity extends ActionBarActivity {
         } catch (IOException e) {
             Log.e(TAG, "Couldn't correct orientation: " + e.toString());
         }*/
+		
         bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
-        // NOTE: remove before release version.  Useful for debugging.
-        Log.v(TAG, "Before baseApi");
+    }
 
-        // Create the tesseract API object here
-        TessBaseAPI baseApi = new TessBaseAPI();
+	protected  void initTessBaseAPI() {
+
+        Log.v(TAG, "Intitializing TessBaseAPI object");
+
+		// Create the tesseract API object here
+        baseApi = new TessBaseAPI();
         baseApi.setDebug(true);
-        // Initialize with the traineddata
+		// Initialize with the traineddata
         baseApi.init(DATA_PATH, lang);
+		// Set the image scanned by the TessBaseAPI object. In this case it it the bitmap initialized in initBitmap
         baseApi.setImage(bitmap);
+
+
+
+    }
+
+
+    /**
+     * scanForText()
+     * Preconditions:
+     * Member variable bitmap has been initialized.
+     * Member variable baseApi has been initialized.
+     * Post-conditions:
+     *  A String object containing the text in the analyzed region of the image.
+     */
+    protected void scanForText() {
+
+		// Empty recognizedText
+		recognizedText = "";
+
+        words = baseApi.getWords();
+
+        int X = words.getBox(0).getX();
+        int Y = words.getBox(0).getY();
+        int Width = words.getBox(0).getWidth();
+        int Height = words.getBox(0).getHeight();
+
+
+        String s = String.format("Bounded Word : X: %d,  Y: %d, Width: %d, Height: %d ", X,Y, Width, Height);
+        Log.v(TAG, s);
+
+        String s2 = String.format("Original Rect : X: %d,  Y: %d, Width: %d, Height: %d ", left,top, width, height);
+        Log.v(TAG, s2);
 
         // Get the recognized text from the image.
         recognizedText = baseApi.getUTF8Text();
-        baseApi.end();
+		
+		// Originally the entire image was scanned for text at once prior to displaying the image.
+		// It has since changed to scan around a location touched. 
+		// Since the TessBaseAPI object will scan throughout execution it can no longer be stoped with TessBaseAPI.end() here.
+		//baseApi.end();
 
         // You now have the text in recognizedText var, you can do anything with it.
         // We will display a stripped out trimmed alpha-numeric version of it (if lang is eng)
@@ -456,14 +583,12 @@ public class MainActivity extends ActionBarActivity {
         //Finally, trim off text
         recognizedText = recognizedText.trim();
 
-        //Just added this:
+		// Place the recognized text in the _field for viewing purposes
         _field = (EditText) findViewById(R.id.ocrEditText);
         if ( recognizedText.length() != 0 ) {
             _field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
             _field.setSelection(_field.getText().toString().length());
             _field.setText(recognizedText);
-            //This next line throws an error:
-            //speakText();
         }
 
         // Cycle done.
