@@ -406,16 +406,7 @@ public class MainActivity extends ActionBarActivity {
 
             int touchedRGB = bitmap.getPixel(x, y);
 
-            //Continent Map
 
-            /*if(touchedRGB == Color.WHITE){
-                //colorName.setText("white");
-
-                blockText = "Ocean";
-               /* colorRGB.setText("touched color: WHITE");
-                colorRGB.setTextColor(Color.BLACK);
-                *//*
-            }*/
 
             // Create a rectangle surrounding the pixel touched
             left = x - 32;
