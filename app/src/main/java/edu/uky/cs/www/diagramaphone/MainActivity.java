@@ -51,8 +51,8 @@ public class MainActivity extends ActionBarActivity {
 	// Bitmap of image being processed
     Bitmap bitmap;
 
+    // Temporary: Experimenting with TessBaseAPI.getWords()
     Pixa words;
-
     int left,top,width,height;
 
     // Should get initialized to the main activity's EditText
@@ -358,28 +358,21 @@ public class MainActivity extends ActionBarActivity {
                     .show();
         }
 
-        //scanForText(imgDecodableString);
 		initBitmap();
 		initTessBaseAPI();
         initTTS();
         // NOTE: remove before release.  Useful for debugging.
         Log.v(TAG, imgDecodableString);
-        //speakText();
     }
 
-/*
-    View.OnTouchListener imgSourceOnTouchListener
-            = new View.OnTouchListener() {
 
-        @Override
-        public boolean onTouch(View view, MotionEvent event) {
-            Log.v(TAG, "test listener");
-            speakText();
-            return true;
-        }
-    };
-*/
-
+    /**
+     * imageSourceOnTouchListener
+     * Preconditions:
+     * An image View has been instantiated and is displayed on the screen
+     * Post-conditions:
+     * A listener is active on the image displayed on screen. The area around any touch event is analyzed for text
+     */
 	View.OnTouchListener imgSourceOnTouchListener
         = new View.OnTouchListener() {
 
@@ -399,24 +392,6 @@ public class MainActivity extends ActionBarActivity {
             int x = Integer.valueOf((int) eventXY[0]);
             int y = Integer.valueOf((int) eventXY[1]);
 
-		/*	touchedXY.setText(
-					"touched position: "
-					+ String.valueOf(eventX) + " / "
-					+ String.valueOf(eventY));
-		    invertedXY.setText(
-					"touched position: "
-					+ String.valueOf(x) + " / "
-					+ String.valueOf(y));
-		*/
-            //Drawable imgDrawable = ((ImageView) view).getDrawable();
-            //Bitmap bitmap = ((BitmapDrawable) imgDrawable).getBitmap();
-
-			/*			imgSize.setText(
-					"drawable size: "
-					+ String.valueOf(bitmap.getWidth()) + " / "
-					+ String.valueOf(bitmap.getHeight()));
-			*/
-            //Limit x, y range within bitmap
             if (x < 0) {
                 x = 0;
             } else if (x > bitmap.getWidth() - 1) {
@@ -442,27 +417,44 @@ public class MainActivity extends ActionBarActivity {
                 *//*
             }*/
 
+            // Create a rectangle surrounding the pixel touched
             left = x - 32;
             top = y - 32;
             width = 64;
             height = 64;
 
+            // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
             baseApi.setRectangle(left, top, width, height);
+
+
             scanForText();
+
             //Log.v(TAG, "Text Read: " + recognizedText);
             Log.v(TAG, "test listener");
             speakText();
+
             return true;
         }
     };
 
+    /**
+    * initBitmap()
+     * Preconditions:
+     * An image has been selected with loadImagefromGallery.
+     * A string containing its filepath has been stored in imgDecodablString
+     * Post-conditions:
+     * A bitmap object of the selected image is instantiated and stored in the member variable bitmap.
+     **/
 	protected  void initBitmap() {
         
 		Log.v(TAG, "Intitializing Bitmap object");
 
+        // Create an Options object for the Birmap
         BitmapFactory.Options options = new BitmapFactory.Options();
+        // Set the bitmap size to 1/N of the original image. Size of N is inversely proportional to accuracy and time taken to complete OCR
         options.inSampleSize = 1;
 
+        // Create a bitmap form the image at filepath imgDecodableString with the options specified by options
         bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
 
 		// Code for rotating an improperly aligned image.  Might be useful for later, not
@@ -512,11 +504,19 @@ public class MainActivity extends ActionBarActivity {
         } catch (IOException e) {
             Log.e(TAG, "Couldn't correct orientation: " + e.toString());
         }*/
-		
+
+        // Convert to ARGB_8888, required by tess
+        // If the above code is uncommented. Comment out this line.
         bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
     }
 
+    /**
+     * Preconditions:
+     * A Bitmap object has been instantiatied and stored in the member variable bitmap
+     * Post-conditions:
+     * A TessBaseAPI object has been instantiated and stored in the member variable baseApi.
+     */
 	protected  void initTessBaseAPI() {
 
         Log.v(TAG, "Intitializing TessBaseAPI object");
@@ -549,6 +549,9 @@ public class MainActivity extends ActionBarActivity {
 
         words = baseApi.getWords();
 
+        //==========================================================================================================
+        // This block of code is temporary. Testing TessBaseAPI.getWords()
+
         int X = words.getBox(0).getX();
         int Y = words.getBox(0).getY();
         int Width = words.getBox(0).getWidth();
@@ -560,6 +563,9 @@ public class MainActivity extends ActionBarActivity {
 
         String s2 = String.format("Original Rect : X: %d,  Y: %d, Width: %d, Height: %d ", left,top, width, height);
         Log.v(TAG, s2);
+
+
+        //=========================================================================================================
 
         // Get the recognized text from the image.
         recognizedText = baseApi.getUTF8Text();
@@ -591,7 +597,6 @@ public class MainActivity extends ActionBarActivity {
             _field.setText(recognizedText);
         }
 
-        // Cycle done.
     }
 
 }
