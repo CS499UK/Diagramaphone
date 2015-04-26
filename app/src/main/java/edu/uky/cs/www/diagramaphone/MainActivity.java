@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -50,6 +52,8 @@ public class MainActivity extends ActionBarActivity {
 	
 	// Bitmap of image being processed
     Bitmap bitmap;
+
+    int oldColor;
 
     // Temporary: Experimenting with TessBaseAPI.getWords()
     Pixa words;
@@ -392,38 +396,59 @@ public class MainActivity extends ActionBarActivity {
             int x = Integer.valueOf((int) eventXY[0]);
             int y = Integer.valueOf((int) eventXY[1]);
 
-            if (x < 0) {
-                x = 0;
-            } else if (x > bitmap.getWidth() - 1) {
-                x = bitmap.getWidth() - 1;
-            }
-
-            if (y < 0) {
-                y = 0;
-            } else if (y > bitmap.getHeight() - 1) {
-                y = bitmap.getHeight() - 1;
-            }
-
-            int touchedRGB = bitmap.getPixel(x, y);
+            //Limit x, y range within bitmap
 
 
 
-            // Create a rectangle surrounding the pixel touched
-            left = x - 32;
-            top = y - 32;
-            width = 64;
-            height = 64;
-
-            // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
-            baseApi.setRectangle(left, top, width, height);
-
-
-            scanForText();
 
             //Log.v(TAG, "Text Read: " + recognizedText);
             Log.v(TAG, "test listener");
-            speakText();
 
+            Drawable imgDrawable = ((ImageView)view).getDrawable();
+            Bitmap bitmap = ((BitmapDrawable)imgDrawable).getBitmap();
+            if(x < 0 | x > bitmap.getWidth()-1 | y < 0 | y > bitmap.getHeight() - 1) {
+
+                if (x < 0) {
+                    x = 0;
+                    recognizedText = "Off left border";
+                } else if (x > bitmap.getWidth() - 1) {
+                    x = bitmap.getWidth() - 1;
+                    recognizedText = "Off right border";
+                }
+
+                if (y < 0) {
+                    y = 0;
+                    recognizedText = "Off bottom border";
+                } else if (y > bitmap.getHeight() - 1) {
+                    y = bitmap.getHeight() - 1;
+                    recognizedText = "Off top border";
+                }
+            }
+            else{
+                // Create a rectangle surrounding the pixel touched
+                left = x - 32;
+                top = y - 32;
+                width = 64;
+                height = 64;
+
+                // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
+                baseApi.setRectangle(left, top, width, height);
+
+                scanForText();
+            }
+
+            int touchedRGB = bitmap.getPixel(x, y);
+            Log.i(TAG, "touchedRGB = "+ Integer.toHexString(touchedRGB));
+            Log.i(TAG,"OldColor = " + Integer.toHexString(oldColor));
+
+            if(!Integer.toHexString(touchedRGB).equals(Integer.toHexString(oldColor))){
+                playSound();
+            }
+
+            oldColor = touchedRGB;
+
+            Log.v(TAG, "OCRED TEXT: " + recognizedText);
+            speakText();
             return true;
         }
     };
@@ -440,7 +465,7 @@ public class MainActivity extends ActionBarActivity {
         
 		Log.v(TAG, "Intitializing Bitmap object");
 
-        // Create an Options object for the Birmap
+        // Create an Options object for the Bitmap
         BitmapFactory.Options options = new BitmapFactory.Options();
         // Set the bitmap size to 1/N of the original image. Size of N is inversely proportional to accuracy and time taken to complete OCR
         options.inSampleSize = 1;
@@ -543,7 +568,7 @@ public class MainActivity extends ActionBarActivity {
         //==========================================================================================================
         // This block of code is temporary. Testing TessBaseAPI.getWords()
 
-        int X = words.getBox(0).getX();
+      /*  int X = words.getBox(0).getX();
         int Y = words.getBox(0).getY();
         int Width = words.getBox(0).getWidth();
         int Height = words.getBox(0).getHeight();
@@ -554,7 +579,7 @@ public class MainActivity extends ActionBarActivity {
 
         String s2 = String.format("Original Rect : X: %d,  Y: %d, Width: %d, Height: %d ", left,top, width, height);
         Log.v(TAG, s2);
-
+*/
 
         //=========================================================================================================
 

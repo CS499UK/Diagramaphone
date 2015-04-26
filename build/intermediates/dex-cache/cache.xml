@@ -2,46 +2,46 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\pre-dexed\debug\classes-0ff5a89c76ac96f3634609047615990441410e0a.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\exploded-aar\Diagramaphone.libraries\opencv\unspecified\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="9a680d77b0fbee10b0bb71d176429b093dae468e">
-        <dex dex="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\pre-dexed\debug\classes-52d96e3c3d31cb786f94d4992ccefc01bf00ecd3.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\pre-dexed\debug\classes-ffa3d00ad7a1fe3dba8ee1fbe01b2aa460e77e00.jar" />
-    </item>
-    <item
-        jar="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jar="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-f5d552e63138d7034722ef07f7ad4a6397948256.jar" />
+        <dex dex="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9191cb6c277b4e3ec0556c40946b0735b1f17feb.jar" />
     </item>
     <item
-        jar="C:\Users\Jesse\AppData\Local\Android\sdk3\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jar="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/exploded-aar/Diagramaphone.libraries/opencv/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b1fefe04128dfbf735b19eee795e743c197e1819">
+        <dex dex="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-fb7fb1100b63011922d5a912b01813b8895c0fd5.jar" />
+    </item>
+    <item
+        jar="/Users/Larry/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-a793f37e889ec5584365d93dfabaaf1263099212.jar" />
+        <dex dex="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-86c87269ce832abc21d9225077c9cf4c3733ed56.jar" />
     </item>
     <item
-        jar="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\exploded-aar\Diagramaphone.libraries\tess-two\unspecified\classes.jar"
+        jar="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="8d736320643ae8c58d9e19d52d9637a048fafcbb">
-        <dex dex="C:\Users\Jesse\OneDrive\Documents\CS499\Diagramaphone2\Diagramaphone\app\build\intermediates\pre-dexed\debug\classes-7d30f1f4a19535b971ad3a7e3a12d4e59f2d77d0.jar" />
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-e9484fedd698cbac4908a9367fa0f55f449ed395.jar" />
+    </item>
+    <item
+        jar="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-a75fe2254cb82ba4ebd1240fb66cc8c4884a3bb9.jar" />
+    </item>
+    <item
+        jar="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/exploded-aar/Diagramaphone.libraries/tess-two/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="713375266969c1db5a468da85be96198ade489ad">
+        <dex dex="/Users/Larry/Documents/Diagramaphone/app/build/intermediates/pre-dexed/debug/classes-0d6c3bf2b49ce875158979f63049ba1e3e1c72e2.jar" />
     </item>
 
 </items>
