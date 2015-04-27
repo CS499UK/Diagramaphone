@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
 
     // Result Strings for optical character recognition
     private static int RESULT_LOAD_IMG = 1;
-    String recognizedText;
+    String recognizedText, oldRecognizedText;
     String imgDecodableString;
 	
 	//TessbaseAPI object used for OCR 
@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
 	// Bitmap of image being processed
     Bitmap bitmap;
 
-    int oldColor;
+    int oldColor, old_R, old_G, old_B;
 
     // Temporary: Experimenting with TessBaseAPI.getWords()
     Pixa words;
@@ -430,25 +430,49 @@ public class MainActivity extends ActionBarActivity {
                 top = y - 32;
                 width = 64;
                 height = 64;
-
-                // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
+                String testString = "temp$5";
                 baseApi.setRectangle(left, top, width, height);
-
                 scanForText();
+                while(!recognizedText.equals(testString)) {
+                    Log.i(TAG, "In while loop");
+                    // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
+
+                    testString = recognizedText;
+                    Log.i(TAG, "testString = " + testString);
+                    Log.i(TAG, "recognized = " + recognizedText);
+                    left = left - 32;
+                    width = width + 64;
+                    height = height + 64;
+                    top = top - 32;
+                    baseApi.setRectangle(left, top, width, height);
+                    scanForText();
+                }
             }
 
             int touchedRGB = bitmap.getPixel(x, y);
-            Log.i(TAG, "touchedRGB = "+ Integer.toHexString(touchedRGB));
-            Log.i(TAG,"OldColor = " + Integer.toHexString(oldColor));
+            Log.i(TAG, "touchedRGB = "+  touchedRGB);//Integer.toHexString(touchedRGB));
+            Log.i(TAG,"OldColor = " + oldColor);// Integer.toHexString(oldColor));
+            int R = (touchedRGB & 0xff0000) >> 16;
+            int G = (touchedRGB & 0xff00) >> 8;
+            int B = touchedRGB & 0xff;
 
-            if(!Integer.toHexString(touchedRGB).equals(Integer.toHexString(oldColor))){
+            /*if(!Integer.toHexString(touchedRGB).equals(Integer.toHexString(oldColor))){
+                playSound();
+            }*/
+            if((R < Math.abs(old_R - 10) | G < Math.abs(old_G - 10) | B < Math.abs(old_B - 10)) & recognizedText.equals("")) {
                 playSound();
             }
-
+            old_R = R;
+            old_G = G;
+            old_B = B;
             oldColor = touchedRGB;
 
+
             Log.v(TAG, "OCRED TEXT: " + recognizedText);
-            speakText();
+            if(!recognizedText.equals(oldRecognizedText)) {
+                speakText();
+            }
+            oldRecognizedText = recognizedText;
             return true;
         }
     };
