@@ -66,12 +66,12 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/uky/cs/www/diagramaphone/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.873817" vertical-offset="6338" max-vertical-offset="9630">
-              <caret line="448" column="17" selection-start-line="448" selection-start-column="17" selection-end-line="448" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.27444795" vertical-offset="6318" max-vertical-offset="10080">
+              <caret line="434" column="35" selection-start-line="434" selection-start-column="35" selection-end-line="434" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#12667#16285#0" expanded="true" />
-                <element signature="e#16278#16279#0" expanded="true" />
+                <element signature="e#12691#18036#0" expanded="true" />
+                <element signature="e#18029#18030#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2785,14 +2785,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="41" y="26" width="1296" height="752" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32861635" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3962264" sideWeight="0.49920255" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3962264" sideWeight="0.49920255" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3962264" sideWeight="0.50079745" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2922,8 +2922,8 @@
           <caret line="320" column="0" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12667#16285#0" expanded="true" />
-            <element signature="e#16278#16279#0" expanded="true" />
+            <element signature="e#12691#18036#0" expanded="true" />
+            <element signature="e#18029#18030#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3234,12 +3234,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/uky/cs/www/diagramaphone/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.873817" vertical-offset="6338" max-vertical-offset="9630">
-          <caret line="448" column="17" selection-start-line="448" selection-start-column="17" selection-end-line="448" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.27444795" vertical-offset="6318" max-vertical-offset="10080">
+          <caret line="434" column="35" selection-start-line="434" selection-start-column="35" selection-end-line="434" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12667#16285#0" expanded="true" />
-            <element signature="e#16278#16279#0" expanded="true" />
+            <element signature="e#12691#18036#0" expanded="true" />
+            <element signature="e#18029#18030#0" expanded="true" />
           </folding>
         </state>
       </provider>

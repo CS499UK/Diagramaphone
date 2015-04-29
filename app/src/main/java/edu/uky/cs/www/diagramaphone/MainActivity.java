@@ -12,6 +12,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -418,57 +419,92 @@ public class MainActivity extends ActionBarActivity {
 
                 if (y < 0) {
                     y = 0;
-                    recognizedText = "Off bottom border";
+                    recognizedText = "Off top border";
                 } else if (y > bitmap.getHeight() - 1) {
                     y = bitmap.getHeight() - 1;
-                    recognizedText = "Off top border";
+                    recognizedText = "Off bottom border";
                 }
             }
             else{
                 // Create a rectangle surrounding the pixel touched
-                left = x - 32;
-                top = y - 32;
-                width = 64;
-                height = 64;
+
+                width = bitmap.getWidth()/10;
+                height = bitmap.getHeight()/12;
+
+                left = x - width/2;
+                top = y - height/2;
+
                 String testString = "temp$5";
                 baseApi.setRectangle(left, top, width, height);
                 scanForText();
-                while(!recognizedText.equals(testString)) {
-                    Log.i(TAG, "In while loop");
-                    // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
+                int count = 0;
+                if(!recognizedText.equals("")) {
 
-                    testString = recognizedText;
-                    Log.i(TAG, "testString = " + testString);
-                    Log.i(TAG, "recognized = " + recognizedText);
-                    left = left - 32;
-                    width = width + 64;
-                    height = height + 64;
-                    top = top - 32;
-                    baseApi.setRectangle(left, top, width, height);
-                    scanForText();
+                    while (!recognizedText.equals(testString) & count < 6) {
+                        Log.i(TAG, "In while loop");
+                        // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
+
+                        testString = recognizedText;
+                        Log.i(TAG, "testString = " + testString);
+                        int widthOffset = (int) (width * .0125);
+                        int heightOffset = (int)(height* .0125);
+
+                        left = left - widthOffset;
+                        top = height - heightOffset;
+                        width = width + 2 * widthOffset;
+                        height = height + 2* heightOffset;
+                        /*left = (int) (left * 0.9);
+                        width = (int) (width * 1.2);
+                        height = (int) (height * 1.1);
+                        top = (int) (top * 0.9);*/
+                        String s2 = String.format("Original Rect : X: %d,  Y: %d, Width: %d, Height: %d ", left,top, width, height);
+                        Log.v(TAG, s2);
+
+                        if (y + height > bitmap.getHeight() - 1) {
+                            height = bitmap.getHeight() - y - 1;
+                        }
+                        if (x + width > bitmap.getWidth() - 1) {
+                            width = bitmap.getWidth() - x - 1;
+                        }
+
+                        baseApi.setRectangle(left, top, width, height);
+                        scanForText();
+                        Log.i(TAG, "recognized = " + recognizedText);
+                        count++;
+                        Log.i(TAG, String.format("count: %d", count));
+                    }
+                    if (count == 6 & !recognizedText.equals(testString)) {
+                        recognizedText = "";
+                    }
                 }
             }
 
             int touchedRGB = bitmap.getPixel(x, y);
             Log.i(TAG, "touchedRGB = "+  touchedRGB);//Integer.toHexString(touchedRGB));
             Log.i(TAG,"OldColor = " + oldColor);// Integer.toHexString(oldColor));
-            int R = (touchedRGB & 0xff0000) >> 16;
-            int G = (touchedRGB & 0xff00) >> 8;
-            int B = touchedRGB & 0xff;
+            int r = (touchedRGB & 0xff0000) >> 16;
+            int g = (touchedRGB & 0xff00) >> 8;
+            int b = touchedRGB & 0xff;
 
             /*if(!Integer.toHexString(touchedRGB).equals(Integer.toHexString(oldColor))){
                 playSound();
             }*/
-            if((R < Math.abs(old_R - 10) | G < Math.abs(old_G - 10) | B < Math.abs(old_B - 10)) & recognizedText.equals("")) {
+            if((r < Math.abs(old_R - 10) | g < Math.abs(old_G - 10) | b < Math.abs(old_B - 10)) & recognizedText.equals("")) {
                 playSound();
             }
-            old_R = R;
-            old_G = G;
-            old_B = B;
+            old_R = r;
+            old_G = g;
+            old_B = b;
             oldColor = touchedRGB;
 
+            // Place the recognized text in the _field for viewing purposes
+            _field = (EditText) findViewById(R.id.ocrEditText);
 
-            Log.v(TAG, "OCRED TEXT: " + recognizedText);
+            _field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
+            _field.setSelection(_field.getText().toString().length());
+            _field.setText(recognizedText);
+
+            //Log.v(TAG, "OCRED TEXT: " + recognizedText);
             if(!recognizedText.equals(oldRecognizedText)) {
                 speakText();
             }
@@ -629,13 +665,7 @@ public class MainActivity extends ActionBarActivity {
         //Finally, trim off text
         recognizedText = recognizedText.trim();
 
-		// Place the recognized text in the _field for viewing purposes
-        _field = (EditText) findViewById(R.id.ocrEditText);
-        if ( recognizedText.length() != 0 ) {
-            _field.setText(_field.getText().toString().length() == 0 ? recognizedText : _field.getText() + " " + recognizedText);
-            _field.setSelection(_field.getText().toString().length());
-            _field.setText(recognizedText);
-        }
+
 
     }
 
