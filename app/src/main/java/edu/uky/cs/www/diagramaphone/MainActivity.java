@@ -440,17 +440,17 @@ public class MainActivity extends ActionBarActivity {
                 int count = 0;
                 if(!recognizedText.equals("")) {
 
-                    while (!recognizedText.equals(testString) & count < 6) {
+                    while (!recognizedText.equals(testString) & count < 5) {
                         Log.i(TAG, "In while loop");
                         // Reduce the area searched by th TessBaseAPI object by setting the rectangle to an area around the touched pixel
 
                         testString = recognizedText;
                         Log.i(TAG, "testString = " + testString);
-                        int widthOffset = (int) (width * .0125);
-                        int heightOffset = (int)(height* .0125);
+                        int widthOffset = (int) (width * .1);
+                        int heightOffset = (int)(height* .1);
 
                         left = left - widthOffset;
-                        top = height - heightOffset;
+                        top = top - heightOffset;
                         width = width + 2 * widthOffset;
                         height = height + 2* heightOffset;
                         /*left = (int) (left * 0.9);
